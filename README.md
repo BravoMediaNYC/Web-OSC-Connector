@@ -12,8 +12,8 @@ This project provides a way to connect an HTML page with an OSC (Open Sound Cont
 ## Installation
 
 1. Install the required Python packages:
-
-   **pip** **install** **python-osc** **Flask** **Flask-Cors**
+	a. `pip install python-os Flask Flask-Cors `
+	b. `pip install -r requirements.txt`
 2. Save the [OSCRestProxy.py](vscode-file://vscode-app/c:/Users/Porthos/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) and [index.html](vscode-file://vscode-app/c:/Users/Porthos/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) files in your project directory.
 
 ## Usage
