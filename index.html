@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliders and Text Box Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .text-box-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sliders and Text Box</h1>
+
+    <div class="slider-container">
+        <label for="slider1">Slider 1:</label>
+        <input type="range" id="slider1" min="0" max="100" value="50" oninput="onSliderChange(1, this.value)">
+        <span id="slider1-value">50</span>
+    </div>
+
+    <div class="slider-container">
+        <label for="slider2">Slider 2:</label>
+        <input type="range" id="slider2" min="0" max="100" value="50" oninput="onSliderChange(2, this.value)">
+        <span id="slider2-value">50</span>
+    </div>
+
+    <div class="text-box-container">
+        <label for="textBox">Enter some text:</label>
+        <input type="text" id="textBox" placeholder="Type something..." />
+    </div>
+
+    <button onclick="sendTextBoxData()">Send Text Box Data</button>
+
+    <script>
+        async function  sendOSCData(oscAddress, value) {
+			try {
+                const response = await fetch('http://127.0.0.1:5000/sendOSCMessage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        address: oscAddress,
+                        data: value
+                    })
+                });
+
+                if (response.ok) {
+                } else {
+                    console.error(`Failed to send data.`);
+                }
+            } catch (error) {
+                console.error('Error sending data:', error);
+            }
+		}
+
+
+        async function  onSliderChange(sliderNumber, value) {
+			await sendOSCData(`/slider${sliderNumber}`, value);
+			
+            document.getElementById(`slider${sliderNumber}-value`).textContent = value;
+        }
+
+
+        async function sendTextBoxData() {
+            const textBoxValue = document.getElementById('textBox').value;
+			await sendOSCData(`/textBox`, textBoxValue);
+        }
+
+    </script>
+</body>
+</html>
